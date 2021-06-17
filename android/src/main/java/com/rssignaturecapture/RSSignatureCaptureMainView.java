@@ -19,7 +19,6 @@ import android.util.Base64;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,6 +36,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
   int mOriginalOrientation;
   Boolean saveFileInExtStorage = false;
   String viewMode = "portrait";
+  Boolean showBorder = true;
   Boolean showNativeButtons = true;
   Boolean showTitleLabel = true;
   int maxSize = 500;
@@ -137,11 +137,8 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
    * save the signature to an sd card directory
    */
   final void saveImage() {
-
-    String root = Environment.getExternalStorageDirectory().toString();
-
     // the directory where the signature will be saved
-    File myDir = new File(root + "/saved_signature");
+    File myDir = getContext().getExternalFilesDir("/saved_signature");
 
     // make the directory if it does not exist yet
     if (!myDir.exists()) {
@@ -175,7 +172,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
 
       byte[] byteArray = byteArrayOutputStream.toByteArray();
-      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+      String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
 
       WritableMap event = Arguments.createMap();
       event.putString("pathName", file.getAbsolutePath());

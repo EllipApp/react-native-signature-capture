@@ -3,9 +3,7 @@
 
 var ReactNative = require('react-native');
 var React = require('react');
-var {
-    PropTypes
-} = React;
+var PropTypes = require('prop-types');
 var {
     requireNativeComponent,
     View,
@@ -76,7 +74,7 @@ class SignatureCapture extends React.Component {
     saveImage() {
         UIManager.dispatchViewManagerCommand(
             ReactNative.findNodeHandle(this),
-            UIManager.RSSignatureView.Commands.saveImage,
+            UIManager.getViewManagerConfig('RSSignatureView').Commands.saveImage,
             [],
         );
     }
@@ -84,7 +82,7 @@ class SignatureCapture extends React.Component {
     resetImage() {
         UIManager.dispatchViewManagerCommand(
             ReactNative.findNodeHandle(this),
-            UIManager.RSSignatureView.Commands.resetImage,
+            UIManager.getViewManagerConfig('RSSignatureView').Commands.resetImage,
             [],
         );
     }
@@ -96,6 +94,7 @@ SignatureCapture.propTypes = {
     square: PropTypes.bool,
     saveImageFileInExtStorage: PropTypes.bool,
     viewMode: PropTypes.string,
+    showBorder: PropTypes.bool,
     showNativeButtons: PropTypes.bool,
     showTitleLabel: PropTypes.bool,
     maxSize:PropTypes.number,
